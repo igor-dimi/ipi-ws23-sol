@@ -1,0 +1,60 @@
+# Zettel 01
+
+## Aufgabe 3
+
+- **3.3**
+
+Das Programm zur Verdoppelung einer Einsenkette:
+
+```{text}
+// Input: a string of 1's of length n
+// Ouput: a string of 1's of length 2n
+// Example: if 111 is given as input. The machine terminates at an accepting state
+// with 111111 as the string on the band. 
+//
+//
+
+
+name: double up a string of 1's
+init: q1
+accept: q8
+
+q1, 1
+q2,X,>
+
+q2,_
+q3,Y,<
+
+q2,1
+q2,1,>
+
+q3,1
+q3,1,<
+
+q3,X
+q4,1,>
+
+q4,1
+q5,X,>
+
+q4,Y
+q8,1,>
+
+q5,1
+q5,1,>
+
+q5,Y
+q6,Y,>
+
+q6,1
+q6,1,>
+
+q6,_
+q7,1,<
+
+q7,1
+q7,1,<
+
+q7,Y
+q3,Y,<
+```
