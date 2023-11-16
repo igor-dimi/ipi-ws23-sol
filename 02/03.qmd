@@ -32,5 +32,7 @@ Eine sprache fuer lineare Gleichungssysteme kann z.B. durch folgende EBNF-syntax
     \langle Subziffer\rangle  &::= \underline{_0} | \langle Erstesubziffer\rangle  
 \end{align*}
 
-Die angegebene anforderung 
+Die Anforderung "Die Anzahl der Variablen ist gleich der Anzahl der Gleichungen" ist eine Beschreibung die von dem
+Kontext des Erzeugten Wortes abhaengt - gueltige Gleichungssysteme duerfen beliebige Anzahl an Variablen haben. Da 
+mit EBNF nur kontextfreie Sprachen definiert werden koennen ist diese Anforderung nicht umsetzbar. 
 
