@@ -7,6 +7,7 @@ Eine sprache fuer lineare Gleichungssysteme kann z.B. durch folgende EBNF-syntax
 \begin{align*}
     \langle Gleichungssystem\rangle &::= \langle Gleichung\rangle\{\underline{\backslash n} \langle Gleichung\rangle\} \\
     \langle Gleichung\rangle &::= [\langle Zahl\rangle]\underline{x}\langle Index\rangle\{\langle Vorzeichen\rangle[\langle Zahl\rangle]\underline{x}\langle Index\rangle\}\underline{=}\langle Zahl\rangle \\
+    \langle Vorzeichen \rangle &::= \underline{-} | \underline{+} \\
     \langle Zahl\rangle  &::= \langle Ersteziffer\rangle \{\langle Ziffer\rangle \} \\
     \langle Ersteziffer\rangle  &::= \underline{1} | 
                        \underline{2} | 
