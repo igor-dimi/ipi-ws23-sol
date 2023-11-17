@@ -75,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02/03.html">Zettel 02</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02/02.html">Zettel 02</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -117,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02/03.html" class="sidebar-item-text sidebar-link active">
+  <a href="../02/02.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Zettel 02</span></a>
   </div>
 </li>
@@ -131,7 +131,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#aufgabe-3" id="toc-aufgabe-3" class="nav-link active" data-scroll-target="#aufgabe-3">Aufgabe 3</a></li>
+  <li><a href="#aufgabe-2" id="toc-aufgabe-2" class="nav-link active" data-scroll-target="#aufgabe-2">Aufgabe 2</a></li>
+  <li><a href="#aufgabe-3" id="toc-aufgabe-3" class="nav-link" data-scroll-target="#aufgabe-3">Aufgabe 3</a></li>
   </ul>
 </nav>
     </div>
@@ -155,6 +156,72 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="aufgabe-2" class="level2">
+<h2 class="anchored" data-anchor-id="aufgabe-2">Aufgabe 2</h2>
+<p><strong>Idee</strong>: Vertausche erstes 0 und letzets 1 und interpretiere die Anzahl der 1’en auf dem Band als das Ergebniss.</p>
+<p>Seien z.B.: <span class="math inline">\(n := 4, m := 3\)</span>. Dann gilt:</p>
+<p><span class="math display">\[\begin{align*}
+    4 + 3 &amp;\equiv 1111\fbox{0}11\fbox{1}0 &amp;&amp;\tag{Kodieren der Eingabe} \\
+          &amp;\Rightarrow 1111\fbox{1}11\fbox{0}0 &amp;&amp;\tag{Vertausche erstes 0 und letztes 1} \\
+          &amp; \equiv 7 &amp;&amp;\tag{Dekodieren der Ausgabe}
+\end{align*}\]</span></p>
+<p>Die TM - gegeben durch den folgenden Uebergangsgraph und Uebergangstabelle (Siehe <a href="#fig-graph-2">Figure&nbsp;<span>2</span></a> und <a href="#fig-table-2">Figure&nbsp;<span>1</span></a>) - realisiert diese Berechnung:</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-table-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./imgs/A2-ut.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Uebergangstabelle</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 75.0%;justify-content: center;">
+<div id="fig-graph-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./imgs/A2-ug.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Uebergangsgraph</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Begruendung/Erklaerung der Vorgehensweise dieser TM:</p>
+<ul>
+<li><span class="math inline">\(q_0\)</span>: Das ist der initialer Zustand. Lese 1’en und bewege den Kopf rechts bis erstes 0 gefunden wird. Ersetze diesen 0 durch einen 1, bewege den Kopf rechts und gehe zum Zustand <span class="math inline">\(q_1\)</span> ueber</li>
+<li><span class="math inline">\(q_1\)</span>: Erstes 0 wurde gefunden und durch 1 ersetzt. Lese 1’en und bewege den Kopf rechts bis der zweite 0 gefunden wird. Das ist das Ende der Eingabe. Bewege den Kopf ein mal links zurueck und gehe zum Zustand <span class="math inline">\(q_2\)</span> ueber.</li>
+<li><span class="math inline">\(q_2\)</span>: Der Kopf steht auf den letzten 1 der Eingabe. Ersetze diesen 1 durch einen 0 und bewege den Kopf ein mal links. Da das Ziel erreicht wurde (vertauschen der ersten 0 und letzten 1) gehe zum Zustand <span class="math inline">\(q_A\)</span> ueber.</li>
+<li><span class="math inline">\(q_A\)</span>: Das ist der akzeptierende Zustand. Falls die Eingabe gueltig ist haelt der TM im Zustand <span class="math inline">\(q_A\)</span> mit dem richtigen Ergebniss auf dem Band.</li>
+</ul>
+<p>Folgendes Programm realisiert diese TM auf dem <a href="https://turingmachinesimulator.com/">TM simulator</a>, wobei 0’s durch blanks ersetz wurden, und letzte Bewegung ‘hold’ statt ‘links’ ist. (Das Programm ist auch als txt datei im Zip enthalten)</p>
+<pre class="{text}"><code>//TM machine to add two numbers n and m
+//Input: string of n 1's and a string of m 1's seperated my a blank
+//Output: string of m + n 1's 
+//Example: Input: "1111 111"
+//         Output: "1111111"    
+
+name: add two numbers 
+init: q0
+accept: qA
+
+q0,1
+q0,1,&gt;
+
+q0,_
+q1,1,&gt;
+
+q1,1
+q1,1,&gt;
+
+q1,_
+q2,_,&lt;
+
+q2,1
+qA,_,-</code></pre>
+<p>Alternativ: <a href="http://turingmachinesimulator.com/shared/exnolrpcjq">link</a> zur realisierung der TM auf der Webseite.</p>
+</section>
 <section id="aufgabe-3" class="level2">
 <h2 class="anchored" data-anchor-id="aufgabe-3">Aufgabe 3</h2>
 <p>Eine sprache fuer lineare Gleichungssysteme kann z.B. durch folgende EBNF-syntaxbeschreibung definiert werden:</p>
