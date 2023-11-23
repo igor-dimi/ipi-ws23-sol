@@ -7,6 +7,8 @@ book:
   date: "10/30/2023"
   chapters:
     - index.qmd
+    - 01/01.qmd
+    - 02/02.qmd
   downloads: pdf
 
 bibliography: references.bib
