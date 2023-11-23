@@ -2,10 +2,12 @@
 
 ## Aufgabe 2
 
-folgendes Program loesst das problem:
+### 2.1 
+
+Folgendes Program loesst das problem (auch im zip als `potenz.cc` enthalten)
 
 ```c
-#include "../code/fcpp.hh"
+#include "fcpp.hh"
 
 int quadrat (int x)
 {
@@ -26,4 +28,10 @@ int main(int argc, char** argv)
 {
     return print(potenz(readarg_int(argc, argv, 1), readarg_int(argc, argv, 2)));
 }
+```
+Argumente muessen in der Konsole eingegeben werden, z.B.:
+
+```bash
+$ ./potenz 4 3
+81
 ```
