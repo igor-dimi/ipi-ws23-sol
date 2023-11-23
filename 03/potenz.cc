@@ -17,5 +17,7 @@ int potenz(int x, int n)
 
 int main(int argc, char** argv)
 {
-    return print(potenz(readarg_int(argc, argv, 1), readarg_int(argc, argv, 2)));
+    return print(potenz(
+      readarg_int(argc, argv, 1), 
+      readarg_int(argc, argv, 2)));
 }
