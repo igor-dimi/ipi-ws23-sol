@@ -35,3 +35,8 @@ Argumente muessen in der Konsole eingegeben werden, z.B.:
 $ ./potenz 4 3
 81
 ```
+
+## Aufgabe 3
+
+### 3.1 
+
