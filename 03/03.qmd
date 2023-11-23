@@ -26,7 +26,9 @@ int potenz(int x, int n)
 
 int main(int argc, char** argv)
 {
-    return print(potenz(readarg_int(argc, argv, 1), readarg_int(argc, argv, 2)));
+    return print(potenz(
+      readarg_int(argc, argv, 1), 
+      readarg_int(argc, argv, 2)));
 }
 ```
 Argumente muessen in der Konsole eingegeben werden, z.B.:
@@ -39,4 +41,75 @@ $ ./potenz 4 3
 ## Aufgabe 3
 
 ### 3.1 
+
+Folgendes Program realisiert die rekursive Berechnung der Binomialkoeffizienten (auch im Zip enthalten):
+
+```c
+#include "fcpp.hh"
+
+int binomial(int n, int k)
+{
+    return cond(k == 0 || k == n, 
+            1,
+            binomial(n - 1, k - 1) + binomial(n - 1, k));
+}
+
+int main(int argc, char** argv)
+{
+    return print(binomial(
+        readarg_int(argc, argv, 1),
+        readarg_int(argc, argv, 2)));
+}
+```
+
+Wir haben das Program auf verschieden Werte $n$ und $k$ getestet (zusammen mit der `time` Funktion fuer Messung der Laufzeit) 
+und die Ergebnisse in der folgenden Tabelle zusammengefasst:
+
+[Specs des Systems auf der wir getestet haben: **PC**: ThinkCentre M700, **Processors**: 4 × Intel® Core™ i5-6400 CPU @ 2.70GHz, **Memory**: 15,5 GiB of RAM]{.aside}
+
++-------------------------+---------------+---------------------+
+| **Befehl**              | **Ergebniss** | **Laufzeit (real)** |
++-------------------------+---------------+---------------------+
+| `time ./binomial 1 0`   | 1             | `real 0m0,004s`     |
++-------------------------+---------------+---------------------+
+| `time ./binomial 1 1`   | 1             | `real 0m0,002s`     |
++-------------------------+---------------+---------------------+
+| `time ./binomial 3 2`   | 3             | `real 0m0,002s`     |
++-------------------------+---------------+---------------------+
+| `time ./binomial 10 4`  | 210           | `real 0m0,004s`     |
++-------------------------+---------------+---------------------+
+| `time ./binomial 20 13` | 77520         | `real 0m0,007s`     |
++-------------------------+---------------+---------------------+
+| `time ./binomial 32 15` | 565722720     | `real 0m3,519s`     |
++-------------------------+---------------+---------------------+
+| `time ./binomial 36 13` | -1984177696   | `real 0m13,791s`    |
++-------------------------+---------------+---------------------+
+
+Wie aus der Tabelle ist die Laufzaut $>10s$ fuer die Berechnung `time ./binomial 36 13` jedoch mit dem
+falschen Ergebniss -1984177696 statt das richtige $\binom{36}{13} = 2310789600$. Wir erklaeren diesen
+Phaenomen in der folgenden Teilaufgabe.
+
+### 3.2
+
+Fuer $n = 34$, $k = 18$ liefert das Program
+
+```bash
+$ ./binomial 34 18
+-2091005866
+```
+
+im Gegensatz zu dem erwarteten mathematischen Ergebniss $\binom{34}{18} = 2203961430$.
+
+Dieser 'Fehler' liegt an der 32 bit 2er Komplement Darstellung des Datentyps `int` auf dem Computer. 
+Darunter koennen eine endliche Anzahl von `int` Zahlen dargestellt werden, 
+die im Bereich $[-2^{31}, 2^{31} - 1] = [-2147483648, 2147483648]$ liegen.
+Das mathematische Ergebnis liegt also ausserhalb des darstellbaren Bereiches mit $2203961430 > 2147483648$. 
+
+Da, unter der 2er Komplement Darstellung der MSB (Most Significant Bit) den Bereich der Negativen Zahlen representiert
+kann die Addition zweier groessen Zahlen, deren Ergebniss ausserhalb des darstellbaren Bereiches liegt wieder bei dem negativen 
+Bereich landen, aehnlich wie Modulorechnung. Das wird als **overflow** bezeichnet. 
+
+### 3.3 
+
+
 
