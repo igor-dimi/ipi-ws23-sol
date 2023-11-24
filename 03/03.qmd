@@ -160,6 +160,45 @@ Das ist genau die Definition des Binomialkoeffizientes $B_{n, k}$. Somit gilt:
                          &= (\alpha + \beta)B_{n, k} - \beta \quad \blacksquare
 \end{align*}
 
+### 3.4
+
+Folgend geben wir die iterative Implementierung der Binomialkoeffizienten anhand einer tail-rekursiven Implemenierung
+der Fakultaet-funktion an (auch im Zip als `binomial_fast.cc` erhalten):
+
+```c
+#include "fcpp.hh"
+
+//iterative Implementierung der Fakultaetsfunktion durch Tail-recursion 
+// mit fakit und fak
+int fakit(int res, int n)
+{
+    return cond(
+        n > 1,
+        fakit(res * n, n - 1),
+        res
+    );
+}
+
+int fak(int n)
+{
+    return fakit(1, n);
+}
+
+int binomial_fast(int n, int k)
+{
+    return fak(n) / (fak(k) * fak(n - k));
+}
+
+int main(int argc, char** argv)
+{
+    return print(binomial_fast(
+        readarg_int(argc, argv, 1),
+        readarg_int(argc, argv, 2)));
+}
+```
+
+Diese Implementierung hat die Komplexitaet $\mathcal{O}(n)$ da, die Implementierung von Fakultaet `fak` $\mathcal{O}(n)$ ist
+und `binomial_fast` drei mal `fak` aufruft und nur zwei weitere Basisoperationen verwendet: eine Multiplikation und eine Division. 
 
 
 
