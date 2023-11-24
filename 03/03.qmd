@@ -199,11 +199,74 @@ int main(int argc, char** argv)
 }
 ```
 
-Diese Implementierung hat die Komplexitaet $\mathcal{O}(n)$ da, die Implementierung von Fakultaet `fak` $\mathcal{O}(n)$ ist
-, `binomial_fast` drei mal `fak` aufruft und nur zwei weitere Basisoperationen verwendet: eine Multiplikation und eine Division. 
+ Da, die Implementierung von Fakultaet `fak` $\mathcal{O}(n)$ ist
+, `binomial_fast` nur drei mal `fak` aufruft und nur zwei weitere Basisoperationen verwendet - eine Multiplikation und eine Division - hat diese Implementierung eine Laufzeitkomplexitaet von $\mathcal{O}(n)$.
 
+Wir haben `binomial` und `binomial_fast` auf verschiedene Eingaben hinsichtlich Ausgaben und Geschwindigkeit getestet und die Ergebnisse in der folgenden
+Tabelle zusammengefasst (@tbl-comparison):
 
++------------------------------+---------------+---------------------+
+| **Befehl**                   | **Ergebniss** | **Laufzeit (real)** |
++------------------------------+---------------+---------------------+
+| `time ./binomial 10 4`       | `210`         | `real 0m0,004s`     |
+|                              |               |                     |
+| `time ./binomial_fast 10 4`  | `210`         | `real 0m0,004s`     |
++------------------------------+---------------+---------------------+
+| `time ./binomial 11 6`       | `462`         | `real 0m0,005s`     |
+|                              |               | `real 0m0,005s`     |
+| `time ./binomial_fast 11 6`  | `462`         |                     |
++------------------------------+---------------+---------------------+
+| `time ./binomial 13 10`      | `286`         | `real 0m0,005s`     |
+|                              |               |                     |
+| `time ./binomial_fast 13 10` | `88`          | `real 0m0,004s`     |
++------------------------------+---------------+---------------------+
+| `time ./binomial 20 13`      | `77520`       | `real 0m0,006s`     |
+|                              |               |                     |
+| `time ./binomial_fast 20 13` | `-2`          | `real 0m0,002s`     |
++------------------------------+---------------+---------------------+
+| `time ./binomial 27 15`      | `17383860`    | `real 0m0,123s`     |
+|                              |               |                     |
+| `time ./binomial_fast 27 15` | `0`           | `real 0m0,004s`     |
++------------------------------+---------------+---------------------+
+| `time ./binomial 32 15`      | `565722720`   | `real 0m3,519s`     |
+|                              |               |                     |
+| `time ./binomial_fast 32 15` | `-3`          | `real 0m0,004s`     |
++------------------------------+---------------+---------------------+
+| `time ./binomial 34 19`      | `1855967520`  | `real 0m11,689s`    |
+|                              |               |                     |
+| `time ./binomial_fast 34 19` | `0`           | `real 0m0,002`      |
++------------------------------+---------------+---------------------+
+| `time ./binomial 36 13`      | `-1984177696` | `real 0m15,388s`    |
+|                              |               |                     |
+| `time ./binomial_fast 36 13` | `0`           | `real 0m0,004s`     |
++------------------------------+---------------+---------------------+
+| `time ./binomial 39 23`      | `-943444674`  | `real 3m47,934s`    |
+|                              |               |                     |
+| `time ./binomial_fast 39 23` | `core dumped` | `real 0m0,086s`     |
++------------------------------+---------------+---------------------+
 
+: `binomial` vs `binomial_fast` {#tbl-comparison}
+
+Da `binomial_fast` eine lineare Laufzeitkomplezitaet hat bleibt die Laufzeit c. .004s fuer alle Eingaben. 
+
+Im Gegensatz waechst die Laufzeit von `binomial` proportional zu dem mathematischen Wert $B_{n, k}$ fuer Eingaben $n$ und $k$. 
+Somit ist die Laufzeit sehr hoch fuer grosse Werte von $B_{n, k}$. 
+
+Wie aus der Tabelle zu sehen ist, gibt es bereits ab $n = 27, k = 15$ einen
+Unterschied und fuer hoehere Werte wie $n = 34, k = 19$ oder $n = 36, k = 13$ unterscheiden sich die Laufzeiten um mehr als 10s.
+Fuer $n = 39, k = 23$ ist die Laufzeit von `binomial` sogar fast 4 minuten, wobei `binomial_fast` immer noch bei ~0.004s bleibt. 
+
+### 3.5
+
+Fuer diese Teilaufgabe verwenden wir wieder die obige Tabelle @tbl-comparison. 
+Fuer die ersten zwei Zeilen, also fuer $n = 10, k = 4$ und $n = 11, k = 6$ liefern beide Programme die richtige mathematische Ergebnisse
+$\binom{10}{4} = 210$, bzw. $\binom{11}{6} = 462$. Jedoch liefert `binomial_fast` bereits ab der dritten Zeile, also fuer $n = 13, k = 10$ 
+ein falsches Ergebnis, wobei `binomial` bis der 7en Zeile, d.h fuer $n = 34, k = 19$ richtige Ergebnisse liefert. 
+
+Wie in der Teilaufgabe 3.3 erklaert wurde, gibt es das sogenannte Phaenomen "**overflow**" fuer den Datentyp `int`. Die Fakultaetsfunktion waechst sehr schnell
+und hat bereits fuer die Eingabe 13 den Wert $13! = 6 227 020 800 > 2 147 483 647 = 2^{31} - 1$. 
+Somit fuehrt bereits `fak(13)` zu einem overflow. Da, die Implementierung von`binomial_fast` die Funktion `fak` benutzt, liefert dieses Program fuer Eingaben $n \geq 13$
+ein falsches Ergebnis. 
 
 
 
