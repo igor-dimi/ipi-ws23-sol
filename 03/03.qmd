@@ -67,9 +67,11 @@ und die Ergebnisse in der folgenden Tabelle zusammengefasst:
 
 :::{.callout-note}
 Specs des Systems auf der wir getestet haben: 
+
 * **PC**: ThinkCentre M700 
 * **Processors**: 4 × Intel® Core™ i5-6400 CPU @ 2.70GHz
 * **Memory**: 15,5 GiB of RAM
+
 :::
 
 +-------------------------+---------------+---------------------+
