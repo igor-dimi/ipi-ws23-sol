@@ -333,6 +333,41 @@ Note
 </section>
 <section id="section-3" class="level3">
 <h3 class="anchored" data-anchor-id="section-3">3.3</h3>
+<p>Sei <span class="math inline">\(A_{n, n} = \alpha = A_{n, 0}\)</span> und <span class="math inline">\(\beta := \text{Die konstanten Kosten der Addition}\)</span>. Dann gilt:</p>
+<p><span class="math display">\[\begin{align*}
+    &amp;A_{n, k} = A_{n-1, k-1} + A_{n-1, k} + \beta
+                \tag{Rekursive Beziehung des Rechenaufwands} \\
+    &amp;A_{n, 0} = \alpha = A_{n, n}
+\end{align*}\]</span></p>
+<p>Da die rekursive Beziehungs des Rechenaufwands eine aehnliche Beziehung wie die Binomialkoeffizienten erfuellen koennen diese in einem paskalschen Dreieck wie folgt eingetragen werden (Siehe <a href="#fig-kosten-pascal">Figure&nbsp;<span>1</span></a>)</p>
+<div id="fig-kosten-pascal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/kosten-pascal.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Kosten-dreieck</figcaption>
+</figure>
+</div>
+<p>Betrachten wir nur die Koeffizienten von <span class="math inline">\(\alpha\)</span> und <span class="math inline">\(\beta\)</span> seperat so erhalten wir folgende paskalschen Dreiecke (Siehe <a href="#fig-konstanten-pascal">Figure&nbsp;<span>2</span></a>)</p>
+<div id="fig-konstanten-pascal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/konstanten-pascal.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Konstanten-dreiecke</figcaption>
+</figure>
+</div>
+<p>Von diesen Figuren ist es leicht zu sehen, dass <span class="math inline">\(\alpha_{n, k} = B_{n, k}\)</span> und <span class="math inline">\(\beta_{n, k} = B_{n, k} - 1\)</span>, wobei <span class="math inline">\(\alpha_{n, k}, \beta_{n, k}\)</span> die Koeffizienten von <span class="math inline">\(\alpha\)</span> bzw. <span class="math inline">\(\beta\)</span> sind bzgl der Rechenaufwands <span class="math inline">\(A_{n, k}\)</span>.</p>
+<p>Somit erhalten wir:</p>
+<p><span class="math display">\[A_{n, k} = B_{n, k}\alpha + (B_{n,k} - 1)\beta\]</span></p>
+<p>Formaler Beweis:</p>
+<p>Fuehre die Variablentransformation <span class="math inline">\(\tilde{A}_{n, k} := \frac{A_{n, k} + \beta}{\alpha + \beta}\)</span>. Dann erhalten wir die folgende rekursive Gleichung:</p>
+<p><span class="math display">\[\begin{align*}
+    &amp;\tilde{A}_{n, k} = \tilde{A}_{n-1, k-1} + \tilde{A}_{n-1, k} \\
+    &amp;\tilde{A}_{n, 0} = 1 = \tilde{A}_{n, n}
+\end{align*}\]</span></p>
+<p>Das ist genau die Definition des Binomialkoeffizientes <span class="math inline">\(B_{n, k}\)</span>. Somit gilt:</p>
+<p><span class="math display">\[\begin{align*}
+    \tilde{A}_{n, k} &amp;= B_{n, k} \\
+    \Rightarrow A_{n, k} &amp;= (\alpha + \beta)\tilde{A}_{n, k} - \beta \\
+                         &amp;= (\alpha + \beta)B_{n, k} - \beta \quad \blacksquare
+\end{align*}\]</span></p>
 
 
 </section>
