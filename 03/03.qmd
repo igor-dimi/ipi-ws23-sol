@@ -116,5 +116,54 @@ Bereich landen, aehnlich wie Modulorechnung. Das wird als **overflow** bezeichne
 
 ### 3.3 
 
+Sei $A_{n, n} = \alpha = A_{n, 0}$ und $\beta := \text{Die konstanten Kosten der Addition}$. 
+Dann gilt:
+
+\begin{align*}
+    &A_{n, k} = A_{n-1, k-1} + A_{n-1, k} + \beta 
+                \tag{Rekursive Beziehung des Rechenaufwands} \\
+    &A_{n, 0} = \alpha = A_{n, n}
+\end{align*}
+
+Da die rekursive Beziehungs des Rechenaufwands eine aehnliche Beziehung wie die Binomialkoeffizienten erfuellen
+koennen diese in einem paskalschen Dreieck wie folgt eingetragen werden (Siehe @fig-kosten-pascal)
+
+![Kosten-dreieck](imgs/kosten-pascal.png){#fig-kosten-pascal}
+
+Betrachten wir nur die Koeffizienten von $\alpha$ und $\beta$ seperat so erhalten wir folgende paskalschen Dreiecke
+(Siehe @fig-konstanten-pascal)
+
+![Konstanten-dreiecke](imgs/konstanten-pascal.png){#fig-konstanten-pascal}
+
+Von diesen Figuren ist es leicht zu sehen, dass $\alpha_{n, k} = B_{n, k}$ und $\beta_{n, k} = B_{n, k} - 1$, wobei
+$\alpha_{n, k}, \beta_{n, k}$ die Koeffizienten von $\alpha$ bzw. $\beta$ sind bzgl der Rechenaufwands $A_{n, k}$. 
+
+Somit erhalten wir:
+
+$$A_{n, k} = B_{n, k}\alpha + (B_{n,k} - 1)\beta$$
+
+Formaler Beweis:
+
+Fuehre die Variablentransformation $\tilde{A}_{n, k} := \frac{A_{n, k} + \beta}{\alpha + \beta}$. 
+Dann erhalten wir die folgende rekursive Gleichung:
+
+\begin{align*}
+    &\tilde{A}_{n, k} = \tilde{A}_{n-1, k-1} + \tilde{A}_{n-1, k} \\
+    &\tilde{A}_{n, 0} = 1 = \tilde{A}_{n, n}
+\end{align*}
+
+Das ist genau die Definition des Binomialkoeffizientes $B_{n, k}$. Somit gilt:
+
+\begin{align*}
+    \tilde{A}_{n, k} &= B_{n, k} \\
+    \Rightarrow A_{n, k} &= (\alpha + \beta)\tilde{A}_{n, k} - \beta \\
+                         &= (\alpha + \beta)B_{n, k} - \beta \quad \blacksquare
+\end{align*}
+
+
+
+
+
+
 
 
