@@ -180,6 +180,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">3.1</a></li>
   <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">3.2</a></li>
   <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">3.3</a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">3.4</a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">3.5</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -241,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="aufgabe-3">Aufgabe 3</h2>
 <section id="section-1" class="level3">
 <h3 class="anchored" data-anchor-id="section-1">3.1</h3>
-<p>Folgendes Program realisiert die rekursive Berechnung der Binomialkoeffizienten (auch im Zip enthalten):</p>
+<p>Folgendes Program realisiert die rekursive Berechnung der Binomialkoeffizienten (auch im Zip als <code>binomial.cc</code> enthalten):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"fcpp.hh"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> binomial<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span></span>
@@ -268,7 +270,12 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Specs des Systems auf der wir getestet haben: * <strong>PC</strong>: ThinkCentre M700 * <strong>Processors</strong>: 4 × Intel® Core™ i5-6400 CPU @ 2.70GHz * <strong>Memory</strong>: 15,5 GiB of RAM</p>
+<p>Specs des Systems auf der wir getestet haben:</p>
+<ul>
+<li><strong>PC</strong>: ThinkCentre M700</li>
+<li><strong>Processors</strong>: 4 × Intel® Core™ i5-6400 CPU @ 2.70GHz</li>
+<li><strong>Memory</strong>: 15,5 GiB of RAM</li>
+</ul>
 </div>
 </div>
 <table class="table">
@@ -320,7 +327,7 @@ Note
 </tr>
 </tbody>
 </table>
-<p>Wie aus der Tabelle ist die Laufzaut <span class="math inline">\(&gt;10s\)</span> fuer die Berechnung <code>time ./binomial 36 13</code> jedoch mit dem falschen Ergebniss -1984177696 statt das richtige <span class="math inline">\(\binom{36}{13} = 2310789600\)</span>. Wir erklaeren diesen Phaenomen in der folgenden Teilaufgabe.</p>
+<p>Wie aus der Tabelle zu sehen ist, ist die Laufzaut <span class="math inline">\(&gt;10s\)</span> fuer die Berechnung <code>time ./binomial 36 13</code> jedoch mit dem falschen Ergebniss -1984177696 statt das richtige <span class="math inline">\(\binom{36}{13} = 2310789600\)</span>. Wir erklaeren dieses Phaenomen in der folgenden Teilaufgabe.</p>
 </section>
 <section id="section-2" class="level3">
 <h3 class="anchored" data-anchor-id="section-2">3.2</h3>
@@ -368,6 +375,137 @@ Note
     \Rightarrow A_{n, k} &amp;= (\alpha + \beta)\tilde{A}_{n, k} - \beta \\
                          &amp;= (\alpha + \beta)B_{n, k} - \beta \quad \blacksquare
 \end{align*}\]</span></p>
+</section>
+<section id="section-4" class="level3">
+<h3 class="anchored" data-anchor-id="section-4">3.4</h3>
+<p>Folgend geben wir die iterative Implementierung der Binomialkoeffizienten anhand einer tail-rekursiven Implemenierung der Fakultaet-funktion an (auch im Zip als <code>binomial_fast.cc</code> erhalten):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"fcpp.hh"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">//iterative Implementierung der Fakultaetsfunktion durch Tail-recursion </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">// mit fakit und fak</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fakit<span class="op">(</span><span class="dt">int</span> res<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cond<span class="op">(</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        n <span class="op">&gt;</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        fakit<span class="op">(</span>res <span class="op">*</span> n<span class="op">,</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">),</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        res</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">);</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fak<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fakit<span class="op">(</span><span class="dv">1</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> binomial_fast<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fak<span class="op">(</span>n<span class="op">)</span> <span class="op">/</span> <span class="op">(</span>fak<span class="op">(</span>k<span class="op">)</span> <span class="op">*</span> fak<span class="op">(</span>n <span class="op">-</span> k<span class="op">));</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">**</span> argv<span class="op">)</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> print<span class="op">(</span>binomial_fast<span class="op">(</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        readarg_int<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">,</span> <span class="dv">1</span><span class="op">),</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        readarg_int<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">,</span> <span class="dv">2</span><span class="op">)));</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Da, die Implementierung von Fakultaet <code>fak</code> <span class="math inline">\(\mathcal{O}(n)\)</span> ist , <code>binomial_fast</code> nur drei mal <code>fak</code> aufruft und nur zwei weitere Basisoperationen verwendet - eine Multiplikation und eine Division - hat diese Implementierung eine Laufzeitkomplexitaet von <span class="math inline">\(\mathcal{O}(n)\)</span>.</p>
+<p>Wir haben <code>binomial</code> und <code>binomial_fast</code> auf verschiedene Eingaben hinsichtlich Ausgaben und Geschwindigkeit getestet und die Ergebnisse in der folgenden Tabelle zusammengefasst (<a href="#tbl-comparison">Table&nbsp;<span>1</span></a>):</p>
+<div id="tbl-comparison" class="anchored">
+<table class="table">
+<caption>Table&nbsp;1: <code>binomial</code> vs <code>binomial_fast</code></caption>
+<colgroup>
+<col style="width: 43%">
+<col style="width: 22%">
+<col style="width: 30%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Befehl</strong></td>
+<td><strong>Ergebniss</strong></td>
+<td><strong>Laufzeit (real)</strong></td>
+</tr>
+<tr class="even">
+<td><p><code>time ./binomial 10 4</code></p>
+<p><code>time ./binomial_fast 10 4</code></p></td>
+<td><p><code>210</code></p>
+<p><code>210</code></p></td>
+<td><p><code>real 0m0,004s</code></p>
+<p><code>real 0m0,004s</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>time ./binomial 11 6</code></p>
+<p><code>time ./binomial_fast 11 6</code></p></td>
+<td><p><code>462</code></p>
+<p><code>462</code></p></td>
+<td><code>real 0m0,005s</code> <code>real 0m0,005s</code></td>
+</tr>
+<tr class="even">
+<td><p><code>time ./binomial 13 10</code></p>
+<p><code>time ./binomial_fast 13 10</code></p></td>
+<td><p><code>286</code></p>
+<p><code>88</code></p></td>
+<td><p><code>real 0m0,005s</code></p>
+<p><code>real 0m0,004s</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>time ./binomial 20 13</code></p>
+<p><code>time ./binomial_fast 20 13</code></p></td>
+<td><p><code>77520</code></p>
+<p><code>-2</code></p></td>
+<td><p><code>real 0m0,006s</code></p>
+<p><code>real 0m0,002s</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>time ./binomial 27 15</code></p>
+<p><code>time ./binomial_fast 27 15</code></p></td>
+<td><p><code>17383860</code></p>
+<p><code>0</code></p></td>
+<td><p><code>real 0m0,123s</code></p>
+<p><code>real 0m0,004s</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>time ./binomial 32 15</code></p>
+<p><code>time ./binomial_fast 32 15</code></p></td>
+<td><p><code>565722720</code></p>
+<p><code>-3</code></p></td>
+<td><p><code>real 0m3,519s</code></p>
+<p><code>real 0m0,004s</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>time ./binomial 34 19</code></p>
+<p><code>time ./binomial_fast 34 19</code></p></td>
+<td><p><code>1855967520</code></p>
+<p><code>0</code></p></td>
+<td><p><code>real 0m11,689s</code></p>
+<p><code>real 0m0,002</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>time ./binomial 36 13</code></p>
+<p><code>time ./binomial_fast 36 13</code></p></td>
+<td><p><code>-1984177696</code></p>
+<p><code>0</code></p></td>
+<td><p><code>real 0m15,388s</code></p>
+<p><code>real 0m0,004s</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>time ./binomial 39 23</code></p>
+<p><code>time ./binomial_fast 39 23</code></p></td>
+<td><p><code>-943444674</code></p>
+<p><code>core dumped</code></p></td>
+<td><p><code>real 3m47,934s</code></p>
+<p><code>real 0m0,086s</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Da <code>binomial_fast</code> eine lineare Laufzeitkomplezitaet hat bleibt die Laufzeit c.&nbsp;.004s fuer alle Eingaben.</p>
+<p>Im Gegensatz waechst die Laufzeit von <code>binomial</code> proportional zu dem mathematischen Wert <span class="math inline">\(B_{n, k}\)</span> fuer Eingaben <span class="math inline">\(n\)</span> und <span class="math inline">\(k\)</span>. Somit ist die Laufzeit sehr hoch fuer grosse Werte von <span class="math inline">\(B_{n, k}\)</span>.</p>
+<p>Wie aus der Tabelle zu sehen ist, gibt es bereits ab <span class="math inline">\(n = 27, k = 15\)</span> einen Unterschied und fuer hoehere Werte wie <span class="math inline">\(n = 34, k = 19\)</span> oder <span class="math inline">\(n = 36, k = 13\)</span> unterscheiden sich die Laufzeiten um mehr als 10s. Fuer <span class="math inline">\(n = 39, k = 23\)</span> ist die Laufzeit von <code>binomial</code> sogar fast 4 minuten, wobei <code>binomial_fast</code> immer noch bei ~0.004s bleibt.</p>
+</section>
+<section id="section-5" class="level3">
+<h3 class="anchored" data-anchor-id="section-5">3.5</h3>
+<p>Fuer diese Teilaufgabe verwenden wir wieder die obige Tabelle <a href="#tbl-comparison">Table&nbsp;<span>1</span></a>. Fuer die ersten zwei Zeilen, also fuer <span class="math inline">\(n = 10, k = 4\)</span> und <span class="math inline">\(n = 11, k = 6\)</span> liefern beide Programme die richtige mathematische Ergebnisse <span class="math inline">\(\binom{10}{4} = 210\)</span>, bzw. <span class="math inline">\(\binom{11}{6} = 462\)</span>. Jedoch liefert <code>binomial_fast</code> bereits ab der dritten Zeile, also fuer <span class="math inline">\(n = 13, k = 10\)</span> ein falsches Ergebnis, wobei <code>binomial</code> bis der 7en Zeile, d.h fuer <span class="math inline">\(n = 34, k = 19\)</span> richtige Ergebnisse liefert.</p>
+<p>Wie in der Teilaufgabe 3.3 erklaert wurde, gibt es das sogenannte Phaenomen “<strong>overflow</strong>” fuer den Datentyp <code>int</code>. Die Fakultaetsfunktion waechst sehr schnell und hat bereits fuer die Eingabe 13 den Wert <span class="math inline">\(13! = 6 227 020 800 &gt; 2 147 483 647 = 2^{31} - 1\)</span>. Somit fuehrt bereits <code>fak(13)</code> zu einem overflow. Da, die Implementierung von<code>binomial_fast</code> die Funktion <code>fak</code> benutzt, liefert dieses Program fuer Eingaben <span class="math inline">\(n \geq 13\)</span> ein falsches Ergebnis.</p>
 
 
 </section>
