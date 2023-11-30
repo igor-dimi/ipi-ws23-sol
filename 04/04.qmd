@@ -1,0 +1,45 @@
+# Zettel 04 {.unnumbered}
+
+## Aufgabe 2
+
+Wir verwenden folgenden Definitionen in dem Beweis:
+
+1. **2er Komplementdarstellung**: 
+
+$$d_n: [-2^{n-1}, 2{n-1} - 1] \rightarrow [0, 2^{n - 1}]$$
+
+\begin{numcases}{d_n: x \mapsto}
+   a & $a\geq0$ \tag{Dar 1}
+   \\
+   2^{n} - |a| & $a<0$ \tag{Dar 2}
+\end{numcases}
+
+2. **Bescheidung**: 
+
+\begin{numcases}{s_n(x_{m-1}\dots x_0) = }
+    x_{m-1}\dots x_0 & $m \leq n$  \tag{Besch 1} \\
+    x_{n-1}\dots x_0 & $m > n$  \tag{Besch 2}
+\end{numcases}
+
+**Beweis**:
+
+* $\underline{a = 0: }$
+
+\begin{align*}
+    d_n(0) &= d_n(-0) \tag{$-0 = 0$} \\
+           &= s_n(2^n) \tag{Besch 2} \\
+           &= s_n(2^n - 0) \tag{Arithmetik} \\
+           &= s_n(2^n - d_n(0)) \tag{Dar 1}
+\end{align*}
+
+* $\underline{0 < a < 2^{n - 1}: }$ some text here? 
+
+
+what the hell is going on ? $a$
+
+<!-- \begin{align*}
+    d_n(-a) &= 2^n - |a| \tag{$-a < 0$ Dar 2} \\
+            &= 2^n - a \tag{$a > 0 \Rightarrow |a| = a$} \\
+            &= s_n(2^n - a) \tag{$2^n - a < 2^n$, Besch 1}  \\
+            &= s_n(2^n - d_n(a)) \tag{$a > 0$, Dar 1}
+\end{align} -->
