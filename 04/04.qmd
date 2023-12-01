@@ -1,20 +1,75 @@
 # Zettel 04 {.unnumbered}
 
+## Aufgabe 1
+
+Laut [link](https://en.cppreference.com/w/cpp/language/types) existieren folgende verschiedene "Data Models", die 
+die Groesse der Grunddatengypen festlegen:
+
+### 1.1
+
+* **LP32**(32 bit Systeme): 
+  * `int`: 16-bit
+  * `long`: 32-bit
+  * `pointer`: 32-bit
+* **ILP32**(32 bit Systeme): 
+  * `int`: 32-bit
+  * `long`: 32-bit
+  * `pointer`: 32-bit
+* **LLP64**(32 bit Systeme): 
+  * `int`: 32-bit
+  * `long`: 32-bit
+  * `pointer`: 64-bit
+* **LP64**(32 bit Systeme): 
+  * `int`: 32-bit
+  * `long`: 64-bit
+  * `pointer`: 64-bit
+
+Somit ist `long` mindestens 32-bit kann aber auch 64-bit sein. 
+
+### 1.2
+
+Bezeichne $[\texttt{S}|\texttt{E}|\texttt{M}]_{\texttt{FP32}}$ Die IEEE754 Fliesskommadarstellung einer zahl, wobei $S := \text{sign bit}$, 
+$E := \text{Exponent}$, $M := \text{Mantisse}$, und sei $[\texttt{S|E|M}]_2$ die 2-Bit Ganzzahldarstellung der selben Bitfolge. 
+
+Dann gilt: 
+
+\begin{align*}
+    \log_2(y) &= \log([\texttt{0|E|M}]_{\texttt{FP32}}) \tag{fuer ein $y >= 0$ im gueltigen Bereich} \\
+              &= \log_2((1 + \frac{M}{2^{23}})2^{\texttt{E} - 127}) \tag{Interpretation von $[\bullet]_{\texttt{FP32}}$} \\
+              &= \log_2(1 + \frac{M}{2^{23}}) + \texttt{E} - 127 \tag{Rechenregeln fuer $\log$} \\
+              &\approx \frac{\texttt{M}}{2^{23}} + \mu + \texttt{E} - 127 \tag{$\log_2(1 + x) \approx x + \mu$} \\
+              &= \frac{1}{2^{23}}(\mu + 2^{23} + E) + \mu - 127 \tag{arithmetik} \\
+              &= \frac{1}{2^{23}}[\texttt{0|E|M}]_2 + \mu - 127 \tag{Interpretation von $[\bullet]_2$} \\
+              &= \alpha\cdot [\texttt{0|E|M}]_2 + \beta \tag{$\alpha, \beta$ bestimmte Konstanten}
+\end{align*}
+
+Diese Umformungen stellen die Bezieuhung zwischen dem Logarithmus einer zahl $y$ und der Bitfolge ihrer IEEE754 FP Darstellung dar: Interpreteriert man die
+Bitfolge als eine 2-Bit Ganzahl, so besteht ein linearer Zusammenhang zwischem dem Logarithmus und die zur 2-Bit Bitfolge entsprechende Ganzzahl, sie unterscheiden sich approximativ lediglich um eine
+Skalierung und Verschiebung. 
+
+### 1.3
+
+`y` ist ein `float`. Mit `i = * (long *) &y` weisen wir die im `y` enthaltene Bitfolge zu der Variable `i` zu und stellen den Typ von `i` als `long`
+fest. Somit enthaelt  `i` die genaue Bitfolge von `y` aber wird als `long` interpretiert statt als `float`. Der numerische Wert von `i` ist ganz anderes als dies von `y` aber mit der selben Bitfolge.
+
+Hingegen fuehrt `i = (long) y` eine automatische Typkonvertierung durch und weist den Wert von `y` gerundet auf einer Ganzzahl zu `i` zu.
+Somit tragen `i` und `y` aehnliche numerische Werte aber `i` hat eine ganz andere Bitfolge von `y`. Da, wir uns fuer die genaue Bitfolge interessieren und nicht fuer den numerischen wert wuerde das gar nicht funktioneren.
+
 ## Aufgabe 2
 
 Wir verwenden folgenden Definitionen in dem Beweis:
 
 1. **2er Komplementdarstellung**: 
 
-$$d_n: [-2^{n-1}, 2{n-1} - 1] \rightarrow [0, 2^{n - 1}]$$
+$$d_n: [-2^{n-1}, 2^{n-1} - 1] \rightarrow [0, 2^{n - 1}]$$
 
-\begin{numcases}{d_n: x \mapsto}
+\begin{numcases}{d_n: a \mapsto}
    a & $a\geq0$ \tag{Dar 1}
    \\
    2^{n} - |a| & $a<0$ \tag{Dar 2}
 \end{numcases}
 
-2. **Bescheidung**: 
+2. **Beschneidung**: 
 
 \begin{numcases}{s_n(x_{m-1}\dots x_0) = }
     x_{m-1}\dots x_0 & $m \leq n$  \tag{Besch 1} \\
@@ -23,7 +78,7 @@ $$d_n: [-2^{n-1}, 2{n-1} - 1] \rightarrow [0, 2^{n - 1}]$$
 
 **Beweis**:
 
-* $\underline{a = 0: }$
+* $\underline{a = 0}$
 
 \begin{align*}
     d_n(0) &= d_n(-0) \tag{$-0 = 0$} \\
@@ -32,14 +87,156 @@ $$d_n: [-2^{n-1}, 2{n-1} - 1] \rightarrow [0, 2^{n - 1}]$$
            &= s_n(2^n - d_n(0)) \tag{Dar 1}
 \end{align*}
 
-* $\underline{0 < a < 2^{n - 1}: }$ some text here? 
+* $\underline{0 < a < 2^{n - 1}: }$ 
 
-
-what the hell is going on ? $a$
-
-<!-- \begin{align*}
-    d_n(-a) &= 2^n - |a| \tag{$-a < 0$ Dar 2} \\
+\begin{align*}
+    d_n(-a) &= 2^n - |a| \tag{$-a < 0$, Dar 2} \\
             &= 2^n - a \tag{$a > 0 \Rightarrow |a| = a$} \\
             &= s_n(2^n - a) \tag{$2^n - a < 2^n$, Besch 1}  \\
             &= s_n(2^n - d_n(a)) \tag{$a > 0$, Dar 1}
-\end{align} -->
+\end{align*}
+
+* $\underline{-2^{n-1} < a < 0: }$
+
+\begin{align*}
+    d_n(-a) &= -a \tag{$-a > 0$, Dar 1} \\
+            &= s_n(-a) \tag{$-a < 2^n$, Besch 1} \\
+            &= s_n(2^n - (2^n + a)) \tag{Arithmetik} \\
+            &= s_n(2^n - (2^n - (-a))) \tag{Arithmetik} \\
+            &= s_n(2^n - (2^n - |a|)) \tag{$a < 0 \Rightarrow |a| = - a$} \\
+            &= s_n(2^n - d_n(a)) \tag{$a < 0$, Dar 2}
+\end{align*}
+
+## Aufgabe 3
+
+### 3.1
+
+i) 
+<!-- \begin{align*}
+    \log_2(2n) &= \log_2(2) + log(n) \\
+               &= 1 + \log(n) = 
+               \begin{case}
+                1 + 4s = 5s, & \log(n) = 4s \\
+                1 + 10s = 11s, & \log(n) = 10s \\
+                1 + 100s = 101s, & \log(n) = 100s
+               \end{case}
+\end{align*} -->
+
+\begin{align*}
+    log_2(2n) &= \log_2(2) + \log_2(n) \\
+              &= 1 + \log_2(n) \\
+              &= 
+            \begin{cases}
+                1 + 4s = 5s, & \log_2(n) = 4s \\
+                1 + 10s = 11s, & \log_2(n) = 10s \\
+                1 + 100s = 101s, & \log_2(n) = 100s
+            \end{cases}
+\end{align*}
+
+ii) 
+$$
+    2n = 
+    \begin{cases}
+        2\cdot 4s = 8s,     & n = 4s \\
+        2\cdot 10s = 20s,   & n = 10s \\
+        2\cdot 100s = 200s, & n = 100s
+    \end{cases}
+$$
+
+ii) 
+$$
+    2n\log_2(2n) = 
+    \begin{cases}
+        2\cdot 4s(1 + 4) = 40s,         & n = 4s \\
+        2\cdot 10s(1 + 10) = 220s,      & n = 10s \\
+        2\cdot 100s(1 + 100) = 20200s,  & n = 100s
+    \end{cases}
+$$
+
+ii) 
+$$
+    (2n)^3 = 8n^3 
+    \begin{cases}
+        8\cdot 4s = 40s,        & n = 4s \\
+        8\cot 10s = 80s,        & n = 10s \\
+        8\cdot 100s = 800s,     & n = 100s
+    \end{cases}
+$$
+
+ii)
+$$
+    2^(2n) = (2^n)^2 = 
+    \begin{cases}
+        4^2s = 16s,                 & n = 4s \\
+        10^2s = 100s,               & n = 10s \\
+        100^2s \approx 2.8 std,     & n = 100s
+    \end{cases}
+$$
+
+### 3.2
+
+Wir fuehren die Notation $f \preceq g :\iff f \in \mathcal{O}(g)$ ein. Dann gilt:
+
+\begin{align*}
+    1 &\preceq \log(\log(n)) \\
+      &\preceq \log(n) \\
+      &\preceq n^\epsilon \\
+      &\preceq n^{\log(n)} \\
+      &\preceq c^{n} \\
+      &\preceq n^{n} \\
+      &\preceq c^{c^n} \\
+\end{align*}
+
+## Aufgabe 4
+
+### 4.1
+
+Die Funktion `int kantenindex(int i, int j)` (Quellcode auch im zip im `niklaus.cc` enthalten,
+beachte die fuer die Vereinfachung des Syntax definierten 'Helferfunktionen' `int abs(int x)`, `int min(int i, int j)` und `int max(int i, int j)`): 
+
+```c
+int abs(int x){return cond(x < 0, -x, x);}
+
+//returns minimum of i and j
+int min(int i, int j){return cond(i > j, j, i);}
+
+// returns maximum of i and j
+int max(int i, int j){return cond(i > j, i, j);}
+
+int kantenindex(int i, int j)
+{
+    return cond(
+        i == j || abs(i - j) == 4 || (min(i, j) == 0 && max(i, j) == 3), //Diese Kanten existieren nicht
+        -1, //error code is -1
+        cond(
+            min(i, j) == 2 && max(i, j) == 3, 
+            0, 
+            i + j));
+}
+```
+
+### 4.2 
+
+a) 
+
+```c
+//0000 0100 & zzzz zzzz == 0000 0z00 
+//somit i'te kante besucht <=> (2^i & z) != 0
+//wobei 2^i == 1 << i
+bool kante_besucht(int kante, unsigned char zustand)
+{
+    return ((1 << kante) & zustand) != 0;
+}
+```
+
+b)
+
+```c
+//0000 0100 | zzzz z0zz == zzz z1zz
+//somit besuche i'te kante: z := z | 2^i
+//wobei 2^i == 1 << i
+unsigned char besuche_kante(int kante, unsigned char zustand)
+{
+    return zustand | (1 << kante);
+}
+```
