@@ -42,7 +42,7 @@ $ ./potenz 4 3
 
 ### 3.1 
 
-Folgendes Program realisiert die rekursive Berechnung der Binomialkoeffizienten (auch im Zip enthalten):
+Folgendes Program realisiert die rekursive Berechnung der Binomialkoeffizienten (auch im Zip als `binomial.cc` enthalten):
 
 ```c
 #include "fcpp.hh"
@@ -92,8 +92,8 @@ Specs des Systems auf der wir getestet haben:
 | `time ./binomial 36 13` | -1984177696   | `real 0m13,791s`    |
 +-------------------------+---------------+---------------------+
 
-Wie aus der Tabelle ist die Laufzaut $>10s$ fuer die Berechnung `time ./binomial 36 13` jedoch mit dem
-falschen Ergebniss -1984177696 statt das richtige $\binom{36}{13} = 2310789600$. Wir erklaeren diesen
+Wie aus der Tabelle zu sehen ist, ist die Laufzaut $>10s$ fuer die Berechnung `time ./binomial 36 13` jedoch mit dem
+falschen Ergebniss -1984177696 statt das richtige $\binom{36}{13} = 2310789600$. Wir erklaeren dieses
 Phaenomen in der folgenden Teilaufgabe.
 
 ### 3.2
