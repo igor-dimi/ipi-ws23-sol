@@ -68,5 +68,12 @@
     "title": "Zettel 04",
     "section": "Aufgabe 4",
     "text": "Aufgabe 4\n\n4.1\nDie Funktion int kantenindex(int i, int j) (Quellcode auch im zip im niklaus.cc enthalten, beachte die fuer die Vereinfachung des Syntax definierten ‘Helferfunktionen’ int abs(int x), int min(int i, int j) und int max(int i, int j)):\nint abs(int x){return cond(x &lt; 0, -x, x);}\n\n//returns minimum of i and j\nint min(int i, int j){return cond(i &gt; j, j, i);}\n\n// returns maximum of i and j\nint max(int i, int j){return cond(i &gt; j, i, j);}\n\nint kantenindex(int i, int j)\n{\n    return cond(\n        i == j || abs(i - j) == 4 || (min(i, j) == 0 && max(i, j) == 3), //Diese Kanten existieren nicht\n        -1, //error code is -1\n        cond(\n            min(i, j) == 2 && max(i, j) == 3, \n            0, \n            i + j));\n}\n\n\n4.2\n\n\n\n//0000 0100 & zzzz zzzz == 0000 0z00 \n//somit i'te kante besucht &lt;=&gt; (2^i & z) != 0\n//wobei 2^i == 1 &lt;&lt; i\nbool kante_besucht(int kante, unsigned char zustand)\n{\n    return ((1 &lt;&lt; kante) & zustand) != 0;\n}\n\n\n\n//0000 0100 | zzzz z0zz == zzz z1zz\n//somit besuche i'te kante: z := z | 2^i\n//wobei 2^i == 1 &lt;&lt; i\nunsigned char besuche_kante(int kante, unsigned char zustand)\n{\n    return zustand | (1 &lt;&lt; kante);\n}"
+  },
+  {
+    "objectID": "05/05.html#aufgabe-1",
+    "href": "05/05.html#aufgabe-1",
+    "title": "Zettel 05",
+    "section": "Aufgabe 1",
+    "text": "Aufgabe 1\nSiehe Figure 1\n\n\n  \nFigure 1: Umgebungen bevor \\(\\fbox{1}\\), \\(\\fbox{2}\\), \\(\\fbox{3}\\) ausgefuehrt werden."
   }
 ]
