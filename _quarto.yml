@@ -11,6 +11,8 @@ book:
     - 02/02.qmd
     - 03/03.qmd
     - 04/04.qmd
+    - 05/05.qmd
+
   downloads: pdf
 
 bibliography: references.bib
