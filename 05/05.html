@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -150,6 +184,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#aufgabe-1" id="toc-aufgabe-1" class="nav-link active" data-scroll-target="#aufgabe-1">Aufgabe 1</a></li>
+  <li><a href="#aufgabe-2" id="toc-aufgabe-2" class="nav-link" data-scroll-target="#aufgabe-2">Aufgabe 2</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">2.1</a></li>
+  </ul></li>
+  <li><a href="#aufgabe-3" id="toc-aufgabe-3" class="nav-link" data-scroll-target="#aufgabe-3">Aufgabe 3</a>
+  <ul class="collapse">
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">3.1</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">3.2</a></li>
+  </ul></li>
+  <li><a href="#aufgabe-4" id="toc-aufgabe-4" class="nav-link" data-scroll-target="#aufgabe-4">Aufgabe 4</a></li>
   </ul>
 </nav>
     </div>
@@ -182,6 +226,177 @@ ul.task-list li input[type="checkbox"] {
 <figcaption class="figure-caption">Figure&nbsp;1: Umgebungen bevor <span class="math inline">\(\fbox{1}\)</span>, <span class="math inline">\(\fbox{2}\)</span>, <span class="math inline">\(\fbox{3}\)</span> ausgefuehrt werden.</figcaption>
 </figure>
 </div>
+</section>
+<section id="aufgabe-2" class="level2">
+<h2 class="anchored" data-anchor-id="aufgabe-2">Aufgabe 2</h2>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section">2.1</h3>
+<p>folgendes Code realisiert die <code>float</code> version der Determinante-funktion:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"fcpp.hh"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> determinante<span class="op">(</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> a<span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> b<span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> c<span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> d</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">*</span> d <span class="op">-</span> b <span class="op">*</span> c<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> print<span class="op">(</span>determinante<span class="op">(</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">100</span><span class="op">,</span> <span class="dv">0</span><span class="er">.01</span><span class="op">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span><span class="dv">0</span><span class="er">.01</span><span class="op">,</span> <span class="dv">100</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">));</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Ergebniss</strong>: 10000</p>
+<p><strong>Erklaerung</strong>: Das exakte Ergebniss der Berechnung <span class="math inline">\(10000.0001 = 1.00000001\times 10^4\)</span> kann nicht mit 32 bit <code>float</code> dargestellt werden. Eine 32-bit <code>float</code> ist eine Bitfolge der Form <code>S|E|M</code>, wobei S der “sign-bit”, 8 E’s die ‘Exponenten-bits’ und 23 M’s die ‘Mantisse-bits’ sind. Diese bitfolge wird interpretiert als:</p>
+<p><span class="math display">\[
+[S|E|M]_{FP32} := (-1)^S\times 1.M \times 2^{E - 127}
+\]</span></p>
+<p>Die exakte Darstellung von 1000.0001 in 2er Basis lautet jedoch <span class="math inline">\(1.00111000\ldots11010001101101110001 \times 2^{13}\)</span>. Hier gibt mehr als 23 Stellen nach der Komma, die der Mantisse entsprechen. Jedoch erlaubt <code>float</code> 23 Stellen fuer die Mantisse. Deshalb kann diese Bitfolge nicht genau representiert werden und wird stattdessen moeglichst praezis gerundet.</p>
+<p>Die Rundung erfuellt die Eigenschaft</p>
+<p><span class="math display">\[
+rd(x) = x(1 + r), r &lt; eps
+\]</span></p>
+<p>Wobei <span class="math inline">\(r\)</span> der relative Rundungsfehler, <span class="math inline">\(eps\)</span> die Maschinen-genauigkeit ist. Fuer <code>float</code> lautet dies <span class="math inline">\(2^{-23} \approx 10^{-7}\)</span>.</p>
+<p>Die Rundung <span class="math inline">\(rd(1000.0001) = 1000\)</span> erfuellt tatsaechlich diese Eigenschaft, da <span class="math inline">\(r = \frac{.0001}{10000} = 10^{-8}\)</span></p>
+<p>Die <code>double</code> Version des Programms</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"fcpp.hh"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> determinante<span class="op">(</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> a<span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> b<span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> c<span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> d</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">*</span> d <span class="op">-</span> b <span class="op">*</span> c<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> print<span class="op">(</span>determinante<span class="op">(</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">100</span><span class="op">,</span> <span class="dv">0</span><span class="er">.01</span><span class="op">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span><span class="dv">0</span><span class="er">.01</span><span class="op">,</span> <span class="dv">100</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">));</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Liefert das mathematisch exakte Ergebniss <span class="math inline">\(10000.0001\)</span>. Da, der Datentyp <code>double</code> die 64-bit Fliesskommazahlen realisiert, hat es die Maschinengenauigkeit <span class="math inline">\(eps = 2^{-52}\)</span>. Somit koennen mehr siginifikanten Stellen representiert werden als mit 32-bit FP Zahlen. Die Zahl <span class="math inline">\(10000.0001\)</span> hat immer noch keine exakte Darstellung aber da, <span class="math inline">\(eps\)</span> viel kleiner ist liefert die Rundung die exakte Darstellung.</p>
+</section>
+</section>
+<section id="aufgabe-3" class="level2">
+<h2 class="anchored" data-anchor-id="aufgabe-3">Aufgabe 3</h2>
+<section id="section-1" class="level3">
+<h3 class="anchored" data-anchor-id="section-1">3.1</h3>
+<p>Aequivalente <code>while</code>-Version lautet:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fib<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> b <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">//invariante: a == fib(i) &amp;&amp; b == fib(i + 1) &amp;&amp; i &lt;= n</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> n<span class="op">){</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> t <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> b<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        b <span class="op">=</span> t</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span><span class="co">//i == n =&gt; a == fib(n)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a<span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Schleifenvektor</strong>: <span class="math inline">\(v = (a, b, t, i)\)</span></li>
+<li><strong>Schleifenbedingung</strong>: <span class="math inline">\(B(v) :\equiv i &lt; n\)</span></li>
+<li><strong>Schleifentransformator</strong>: <span class="math inline">\(H(a, b, t, i) = (b, a + b, a + b, i + 1)\)</span></li>
+</ul>
+</section>
+<section id="section-2" class="level3">
+<h3 class="anchored" data-anchor-id="section-2">3.2</h3>
+<ul>
+<li><strong>Vorbedingung</strong>: <span class="math inline">\(P(n) :\equiv 0 \leq n\)</span></li>
+<li><strong>Behauptung</strong>: <span class="math inline">\(Inv(v) :\equiv (a = fib(i)) \wedge (b = fib(i + 1)) \wedge (i\leq n)\)</span></li>
+<li><strong>Nachbedingung</strong>: <span class="math inline">\(Q(v, n) :\equiv a = fib(n)\)</span></li>
+</ul>
+<p><strong>Beweis</strong>:</p>
+<p>Bezeichne <span class="math inline">\(v_j := H^j(v)\)</span></p>
+<ol type="1">
+<li>(<strong>IB</strong>): Vor der ersten Iteration gilt: <span class="math inline">\(v_0 = (a_0, b_0, t_0, i_0) = (0, 1, ?, 0)\)</span> und somit:</li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+a_0 &amp;= 0 \\
+   &amp;= fib(0) \tag{Def von fib} \\
+   &amp;= fib(i_0) \\
+\\
+b_0 &amp;= 1 \\
+   &amp;= fib(1) \tag{Def von fib} \\
+   &amp;= fib(i_0 + 1) \\
+\\
+i_0 &amp;= 0 \leq n \tag{Vorbedingung $P(n)$}
+\end{align*}\]</span></p>
+<p>Somit gilt <span class="math inline">\(Inv(v_0)\)</span></p>
+<ol start="2" type="1">
+<li><p>(<strong>IS</strong>): Gelte die Invariante vor einer <span class="math inline">\(k\)</span>-ten Iteration, d.h <span class="math display">\[Inv(v_k) :\equiv (a_k = fib(i_k)) \wedge (b_k = fib(i_k + 1)) \wedge (i_k \leq n)\]</span> z.z.: <span class="math inline">\(Inv(v_k) \wedge B(v_k) \Rightarrow Inv(v_{k + 1})\)</span></p>
+<p><strong>Bew</strong>: Es gilt: <span class="math display">\[\begin{align*}
+Inv(v_k) \wedge B(v_k)
+     \Leftrightarrow&amp; a_k = fib(i_k) \wedge b_k = fib(i_k + 1)
+                      \wedge i_k \leq n
+                      \wedge i_k &lt; n \tag{Def von $Inv(v)$ und $B(v)$} \\
+     \Rightarrow&amp; a_k = fib(i_k) \wedge b_k = fib(i_k + 1)
+                           \wedge i_k &lt; n \tag{Arithmetik} \\
+     \Rightarrow&amp; a_k + b_k = fib(i_k) + fib(i_k + 1) \wedge b_k = fib(i_k + 1) \wedge i_k + 1 \leq n \tag{Arithmetik} \\
+     \Leftrightarrow&amp; a_k + b_k = fib(i_k + 2) \wedge b_k = fib(i_k + 1) \wedge i_k + 1 \leq n \tag{Def von $fib$} \\
+     \Leftrightarrow&amp; a_k + b_k = fib((i_k + 1) + 1) \wedge b_k = fib(i_k + 1) \wedge i_k + 1 \leq n \tag{Arithmetik} \\
+     \Leftrightarrow&amp; b_{k + 1} = fib(i_{k + 1} + 1) \wedge a_{k + 1} = fib(i_{k + 1}) \wedge i_{k + 1} \leq n \tag{Def von $H$ und $v_{k + 1} = H(v_k)$} \\
+     \Leftrightarrow&amp; Inv(v_{k + 1}) \quad \blacksquare \tag{Def von $Inv(v)$}
+\end{align*}\]</span></p></li>
+<li><p>Nach dem Verlassen der Schleifen bei einem allgemeinen Schleifenvektor <span class="math inline">\(v\)</span> gilt somit: <span class="math display">\[\begin{align*}
+Inv(v) \wedge \neg B(v) &amp;\Leftrightarrow (a = fib(i) \wedge b = fib(i + 1) \wedge i \leq n) \wedge \neg(i &lt; n) \tag{Def von $Inv$ und $B$} \\
+                         &amp;\Leftrightarrow (a = fib(i) \wedge b = fib(i + 1)) \wedge (i \leq n \wedge i \geq n) \tag{DeMorgan} \\
+                         &amp;\Leftrightarrow (a = fib(i) \wedge b = fib(i + 1)) \wedge i = n \tag{Arithmetik} \\
+                         &amp;\Rightarrow a = fib(n) \tag{Aussagenlogik} \\
+                         &amp;\Leftrightarrow Q(v, n) \quad \blacksquare \tag{Def der Nachbedingung $Q$}
+\end{align*}\]</span></p></li>
+</ol>
+</section>
+</section>
+<section id="aufgabe-4" class="level2">
+<h2 class="anchored" data-anchor-id="aufgabe-4">Aufgabe 4</h2>
+<p>Wir betrachten 4 Faelle:</p>
+<p><strong>Fall</strong> <span class="math inline">\(a, b \geq 0\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+    s_n(d_n(a) \cdot d_n(b)) &amp;= s_n(a \cdot b) \tag{Def $d_n$} \\
+                             &amp;= a \cdot b \tag{$ab \leq 2^{n - 1} &lt; 2^n$, Def $s_n$} \\
+                             &amp;= d_n(ab) \tag{$ab \geq 0$}
+\end{align*}\]</span></p>
+<p><strong>Fall</strong> <span class="math inline">\(a, b &lt; 0\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+    s_n(d_n(a)\cdot d_n(b)) &amp;= s_n((2^n - |a|)(2^n - |b|)) \tag{Def $d_n$} \\
+                            &amp;= s_n((2^n +a)(2^n + b)) \tag{$a, b &lt; 0$} \\
+                            &amp;= s_n(4^n + 2^n(a + b) ab) \\
+                            &amp;= s_n(2^n(2^n + a + b) + ab) \\
+                            &amp;= a\cdot b \tag{$0\leq 2^n + a + b &lt; 2^n$, Def $s_n$} \\
+                            &amp;= d_n(ab) \tag{$ab &gt; 0$, Def $d_n$}
+\end{align*}\]</span></p>
+<p><strong>Fall</strong> o.B.d.A <span class="math inline">\(a &lt; 0, b &gt; 0\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+    s_n(d_n(a)d_n(b)) &amp;= s_n((2^n - |a|)b) \tag{$a &lt; 0$, Def $d_n$} \\
+                      &amp;= s_n((2^n + a)b) \tag{$a &lt; 0$} \\
+                      &amp;= s_n(2^nb + ab) \\
+                      &amp;= s_n(2^nb - |ab|) \tag{$ab &lt; 0$} \\
+                      &amp;= s_n(2^nb - 2^n + (2^n - |ab|)) \\
+                      &amp;= s_n(2^n(b - 1) + (2^n - |ab|)) \\
+                      &amp;= 2^n - |ab| \tag{$b\geq 1$, Def $s_n$} \\
+                      &amp;= d_n(ab) \tag{Def $d_n$}
+\end{align*}\]</span></p>
+<p><strong>Fall</strong> o.B.d.A <span class="math inline">\(b = 0\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+    s_n(d_n(a)d_n(0)) &amp;= s_n(d_n(a)\cdot 0) \\
+                      &amp;= s_n(0) \\
+                      &amp;= 0 \\
+                      &amp;= d_n(0) \\
+                      &amp;= d_n(a\cdot 0)  
+\end{align*}\]</span></p>
 
 
 </section>
