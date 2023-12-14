@@ -96,5 +96,26 @@
     "title": "Zettel 05",
     "section": "Aufgabe 4",
     "text": "Aufgabe 4\nWir betrachten 4 Faelle:\nFall \\(a, b \\geq 0\\):\n\\[\\begin{align*}\n    s_n(d_n(a) \\cdot d_n(b)) &= s_n(a \\cdot b) \\tag{Def $d_n$} \\\\\n                             &= a \\cdot b \\tag{$ab \\leq 2^{n - 1} &lt; 2^n$, Def $s_n$} \\\\\n                             &= d_n(ab) \\tag{$ab \\geq 0$}\n\\end{align*}\\]\nFall \\(a, b &lt; 0\\):\n\\[\\begin{align*}\n    s_n(d_n(a)\\cdot d_n(b)) &= s_n((2^n - |a|)(2^n - |b|)) \\tag{Def $d_n$} \\\\\n                            &= s_n((2^n +a)(2^n + b)) \\tag{$a, b &lt; 0$} \\\\\n                            &= s_n(4^n + 2^n(a + b) ab) \\\\\n                            &= s_n(2^n(2^n + a + b) + ab) \\\\\n                            &= a\\cdot b \\tag{$0\\leq 2^n + a + b &lt; 2^n$, Def $s_n$} \\\\\n                            &= d_n(ab) \\tag{$ab &gt; 0$, Def $d_n$}\n\\end{align*}\\]\nFall o.B.d.A \\(a &lt; 0, b &gt; 0\\):\n\\[\\begin{align*}\n    s_n(d_n(a)d_n(b)) &= s_n((2^n - |a|)b) \\tag{$a &lt; 0$, Def $d_n$} \\\\\n                      &= s_n((2^n + a)b) \\tag{$a &lt; 0$} \\\\\n                      &= s_n(2^nb + ab) \\\\\n                      &= s_n(2^nb - |ab|) \\tag{$ab &lt; 0$} \\\\\n                      &= s_n(2^nb - 2^n + (2^n - |ab|)) \\\\\n                      &= s_n(2^n(b - 1) + (2^n - |ab|)) \\\\\n                      &= 2^n - |ab| \\tag{$b\\geq 1$, Def $s_n$} \\\\\n                      &= d_n(ab) \\tag{Def $d_n$}\n\\end{align*}\\]\nFall o.B.d.A \\(b = 0\\):\n\\[\\begin{align*}\n    s_n(d_n(a)d_n(0)) &= s_n(d_n(a)\\cdot 0) \\\\\n                      &= s_n(0) \\\\\n                      &= 0 \\\\\n                      &= d_n(0) \\\\\n                      &= d_n(a\\cdot 0)  \n\\end{align*}\\]"
+  },
+  {
+    "objectID": "06/06.html#aufgabe-1",
+    "href": "06/06.html#aufgabe-1",
+    "title": "Zettel 06",
+    "section": "Aufgabe 1",
+    "text": "Aufgabe 1\ncircular_buffer.cc (auch im Zip enthalten)\nUm die Lesbarkeit der Ausgabe zu vereinfachen interpretieren wir 0 als leeres Slot. Somit wenn ein slot gelesen wird, wird sein Wert durch 0 ersetzt, d.h. ‘geloescht’.\n#include &lt;stdio.h&gt;\n#define N 10\n\nint buffer [N];\n\nint w = 0; //write index\nint r = 0; //read index \n\nint use_size = 0; //count of the elements in buffer\n\nint read()\n{\n    if (use_size == 0) //buffer empty, return error code -1\n        return -1;\n    int i = r; //i holds current read index \n    r = (r + 1) % N; //increment read index modulo N\n    use_size--; //one less element in the buffer, decrement size\n    int output = buffer[i];\n    buffer[i] = 0; //0 value corresponds to an empty slots, i.e. deletion of an element\n    return output;\n}\n\nvoid write (int item)\n{\n    if (use_size == N){ //buffer full, overwrite with warning. \n        printf(\"Warning: buffer full, overwriting oldest element!\\n\");\n        buffer[w] = item;\n        w = (w + 1) % N; //increment write index modulo N\n        r = w; //when buffer full w == r is true\n    } \n    else {\n        buffer[w] = item;\n        w = (w + 1) % N;\n        use_size++;\n    } \n}\n\nvoid print_buffer()\n{\n    printf(\"buffer = [\\n\");\n    for (int i = 0; i &lt; N; i++){\n        if (w != i && r != i) printf(\"  %d\\n\", buffer[i]);\n        if (w != i && r == i) printf(\"&lt; %d\\n\", buffer[i]);\n        if (w == i && r != i) printf(\"&gt; %d\\n\", buffer[i]);\n        if (w == i && r == i) printf(\"&gt;&lt;%d\\n\", buffer[i]);\n    }\n    printf(\"]\\n\\n\");\n};\n\nint main()\n{\n    //initialize buffer\n    for (int i = 0; i &lt; N; i++) buffer[i] = 0; //since buffer contains only positive\n                                               // set everything initially to 0 representing empty slots\n    int i = 13497 % N; //or any other initial random index\n    buffer[i] = 1; //set the slot in this index to 1, everything else is 0\n    r = i; //initial read index \n    w = (i + 1) % N; //initial write index \n    use_size = 1; //initially one element in buffer\n\n    int input; //menu option\n    do {\n        printf(\"input: \");\n        scanf(\"%d\", &input);\n        if (input == -1) break;\n        else if (input == 0){\n            int item = read();\n            if (item == -1) printf(\"buffer is empty\\n\");\n            else {\n                printf(\"\\nout: %d\\n\", item);\n                print_buffer();\n            }\n        } else if (input &gt; 0){\n                write(input);\n                print_buffer();\n        } else printf(\"invalid option!\\n\");\n \n    } while (input != -1);\n    return 0;\n}"
+  },
+  {
+    "objectID": "06/06.html#aufgabe-2",
+    "href": "06/06.html#aufgabe-2",
+    "title": "Zettel 06",
+    "section": "Aufgabe 2",
+    "text": "Aufgabe 2"
+  },
+  {
+    "objectID": "06/06.html#aufgabe-3",
+    "href": "06/06.html#aufgabe-3",
+    "title": "Zettel 06",
+    "section": "Aufgabe 3",
+    "text": "Aufgabe 3"
   }
 ]
