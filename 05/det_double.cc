@@ -12,6 +12,7 @@ double determinante(
 
 int main()
 {
+    printf("%.25f\n", 10000 + 0.0001);
     return print(determinante(
         100, 0.01,
         -0.01, 100
