@@ -1,0 +1,37 @@
+# Zettel 07 {.unnumbered}
+
+## Aufagabe 3
+
+1. `b` hat den Typ `int`. Die Deklaration 
+   ```c
+   int** a, b;
+   ```
+   ist aequivalent zur Deklaration
+   ```c
+   int **a, b
+   ```
+   Somit wird `b` als `int` Deklariert statt als `int**`, was man naiv erwarten wuerde. 
+2. Betrachte foldendes Code-abschnitt:
+   ```c
+   int a[7] = {1, 2, 3, 4, 5, 6, 7} //Deklariere und Initialisiere ein 7 Elementiges Array
+   int *b = &a[3] + 2; //Deklariere b als ein Zeiger auf int und initialisiere ihn als die Addresse
+                       //des 4ten Elementes von a PLUS zwei weitere Addressen
+                       //Addition mit 2 wird nach den Regeln von Pointer-arithmetik durchgefuehrt
+                       //somit erhaelt der Zeiger b die Adddresse von dem 6ten Element von a,
+                       //d.h. die Addresse von 6.
+                       //TLDR: b hat die Addresse von a[5]
+    int c = b[1] // c kriegt *(b + 1) == *((a + 5) + 1) == *(a + 6) == a[6] == 7
+   ```
+   Somit bekommt `c` den Wert `a[6] == 7`. 
+3. `a` ist ein `int` array mit 7 Elementen und wird auf den **Heap** allokiert. Da `a` nicht explizit initialisiert wurde, enthaelt sie keine definite Werde. 
+   Somit enthaelt `b` keine definite Werte. Zu `c` wird sowieso ein Wert ausser dem gueltigen Bereich zugeweisen. Somit enthaelt `c` auch einen indefiniten Wert.
+4.  Zur Addresse, dazu `nullptr` zeigt wird der `char` wert `0` zugewiesen.
+    ```c
+   *(char*)nullptr = 0;
+    ```
+5. Seihe unten:
+   ```c
+   int a[3] = {0, 1, 2} //Deklariere und initialisiere ein 3 Elementiges int array a. 
+   1[a] = 42; //Das ist aequivalent zu *(a + 1) = 42. Somit a[1] == 42 gilt danach
+   ```
+   Der Array `a` enthaelt somit die Werte `{0, 42, 2}`
